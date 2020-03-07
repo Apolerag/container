@@ -3,9 +3,19 @@
 
 #include <iostream>
 
+#include "Arbre.h"
+
 int main()
 {
     std::cout << "Hello World!\n";
+    Arbre a;
+
+    for(int i = 10; i > 0; i--)
+        a.ajouterNoeud(i);
+
+    a.afficher();
+
+    std::cout<< std::endl << a.ValeurDansArbre(3) << " " << a.ValeurDansArbre(12) << " " << a.ValeurDansArbre(5) << std::endl;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
