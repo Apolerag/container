@@ -2,20 +2,28 @@
 //
 
 #include <iostream>
-
+#include <time.h>
+#include <stdlib.h>
 #include "Arbre.h"
+
+#define RANDINT(A,B) ( rand()/(int)RAND_MAX ) * (B - A) + A
+#define MINVAL 0
+#define MAXVAL 10000
 
 int main()
 {
-    std::cout << "Hello World!\n";
-    Arbre a;
+	srand(time(NULL)); // initialisation de rand
+	std::cout << "Hello World!\n";
+	Arbre a;
+	for (int i = 0; i < 100.; i++)
+	{
+		int n = RANDINT(MINVAL, MAXVAL);
+		std::cout << "n " << n << std::endl;
+		a.ajouterNoeud(n);
+	}
 
-    for(int i = 10; i > 0; i--)
-        a.ajouterNoeud(i);
-
-    a.afficher();
-
-    std::cout<< std::endl << a.ValeurDansArbre(3) << " " << a.ValeurDansArbre(12) << " " << a.ValeurDansArbre(5) << std::endl;
+	a.afficher();
+	std::cout << std::endl << a.ValeurDansArbre(3) << " " << a.ValeurDansArbre(12) << " " << a.ValeurDansArbre(5) << std::endl;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
