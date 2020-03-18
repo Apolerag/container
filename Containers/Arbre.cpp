@@ -36,7 +36,7 @@ void Arbre::ajouterNoeud(const int v)
 		while (courant != NULL)
 		{
 			precedent = courant;
-			if (courant->valeur < v)
+			if (courant->valeur <= v)
 			{
 				courant = courant->filsDroit;
 			}
@@ -46,10 +46,14 @@ void Arbre::ajouterNoeud(const int v)
 			}
 		}
 
-		if (v < precedent->valeur)
-			precedent->filsGauche = nouveau;
-		else
+		if (precedent->valeur <= v)
+		{
 			precedent->filsDroit = nouveau;
+		}
+		else
+		{
+			precedent->filsGauche = nouveau;
+		}
 	}
 }
 

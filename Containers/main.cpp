@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "Arbre.h"
 
-#define RANDINT(A,B) ( rand()/(int)RAND_MAX ) * (B - A) + A
+#define RANDINT(A,B)(rand ()%(B-A)+A)
 #define MINVAL 0
 #define MAXVAL 10000
 
@@ -15,7 +15,7 @@ int main()
 	srand(time(NULL)); // initialisation de rand
 	std::cout << "Hello World!\n";
 	Arbre a;
-	for (int i = 0; i < 100.; i++)
+	for (int i = 0; i < 10.; i++)
 	{
 		int n = RANDINT(MINVAL, MAXVAL);
 		std::cout << "n " << n << std::endl;
