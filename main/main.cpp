@@ -4,7 +4,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
-#include "Arbre.h"
+#include <Arbre.h>
 
 #define RANDINT(A,B)(rand ()%(B-A)+A)
 #define MINVAL 0
@@ -16,7 +16,7 @@ int main()
     std::cout << "Hello World!\n";
     Arbre a;
     int i;
-    for (i = 10; i >0; i--)
+    for (i = 10; i > 0; i--)
     {
         int n = RANDINT(MINVAL, MAXVAL);
         std::cout << "n " << n << std::endl;

@@ -4,9 +4,6 @@
     <ClCompile Include="Arbre.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

@@ -132,14 +132,6 @@ void Arbre::supprimeValeur(const int v)
             n->filsGauche = t->filsGauche;
             delete t;
         }
-        else if (fd == NULL)
-        {
-            t = n->filsGauche;
-            n->valeur = t->valeur;
-            n->filsDroit = t->filsDroit;
-            n->filsGauche = t->filsGauche;
-            delete t;
-        }
         else
         {
             t = n->filsGauche;
@@ -147,8 +139,11 @@ void Arbre::supprimeValeur(const int v)
             n->filsDroit = t->filsDroit;
             n->filsGauche = t->filsGauche;
             delete t;
-            // on replace le fils droit
-            placer(fd);
+            // on replace le fils droit s'il existe
+            if (fd != NULL)
+            {
+                placer(fd);
+            }
         }
 
     }
