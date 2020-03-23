@@ -14,9 +14,9 @@ Noeud* Arbre::nouveauNoeud(const int v)
 
 void Arbre::afficher(Noeud* noeud)
 {
-    if (noeud->filsGauche) afficher(noeud->filsGauche);
+    if (noeud->filsGauche != NULL) afficher(noeud->filsGauche);
     std::cout << noeud->valeur << std::endl;
-    if (noeud->filsDroit) afficher(noeud->filsDroit);
+    if (noeud->filsDroit != NULL) afficher(noeud->filsDroit);
 }
 
 void Arbre::libererMemoire(Noeud* n)
@@ -45,6 +45,40 @@ Noeud* Arbre::trouveValeur(const int v)
     return n;
 }
 
+void Arbre::placer(Noeud* n)
+{
+    Noeud* courant = racine;
+    Noeud* precedent = NULL;
+    if (racine == NULL)
+    {
+        racine = n;
+    }
+    else
+    {
+        while (courant != NULL)
+        {
+            precedent = courant;
+            if (courant->valeur <= n->valeur)
+            {
+                courant = courant->filsDroit;
+            }
+            else
+            {
+                courant = courant->filsGauche;
+            }
+        }
+
+        if (precedent->valeur <= n->valeur)
+        {
+            precedent->filsDroit = n;
+        }
+        else
+        {
+            precedent->filsGauche = n;
+        }
+    }
+}
+
 Arbre::Arbre() :racine(NULL)
 {
 }
@@ -56,38 +90,9 @@ Arbre::~Arbre()
 
 void Arbre::ajouterNoeud(const int v)
 {
-    Noeud* courant = racine;
-    Noeud* precedent = NULL;
     Noeud* nouveau = nouveauNoeud(v);
 
-    if (racine == NULL)
-    {
-        racine = nouveau;
-    }
-    else
-    {
-        while (courant != NULL)
-        {
-            precedent = courant;
-            if (courant->valeur <= v)
-            {
-                courant = courant->filsDroit;
-            }
-            else
-            {
-                courant = courant->filsGauche;
-            }
-        }
-
-        if (precedent->valeur <= v)
-        {
-            precedent->filsDroit = nouveau;
-        }
-        else
-        {
-            precedent->filsGauche = nouveau;
-        }
-    }
+    placer(nouveau);
 }
 
 void Arbre::afficher()
@@ -97,13 +102,54 @@ void Arbre::afficher()
 
 bool Arbre::valeurDansArbre(const int v)
 {
-    //bool resultat = false;
-    //Noeud* n = trouveValeur(v);
-
-    return (trouveValeur(v)!=NULL)?true:false;
+    return (trouveValeur(v) != NULL) ? true : false;
 }
 
 void Arbre::supprimeValeur(const int v)
 {
+    Noeud* n = trouveValeur(v);
+    Noeud* fg = NULL;
+    Noeud* fd = NULL;
+    Noeud* t = NULL;
 
+    if (n != NULL)
+    {
+        // on recupere les fils
+        fg = n->filsGauche;
+        fd = n->filsDroit;
+
+
+        if (fg == NULL && fd == NULL)
+        {
+            delete n;
+            n = NULL;
+        }
+        else if (fg == NULL)
+        {
+            t = n->filsDroit;
+            n->valeur = t->valeur;
+            n->filsDroit = t->filsDroit;
+            n->filsGauche = t->filsGauche;
+            delete t;
+        }
+        else if (fd == NULL)
+        {
+            t = n->filsGauche;
+            n->valeur = t->valeur;
+            n->filsDroit = t->filsDroit;
+            n->filsGauche = t->filsGauche;
+            delete t;
+        }
+        else
+        {
+            t = n->filsGauche;
+            n->valeur = t->valeur;
+            n->filsDroit = t->filsDroit;
+            n->filsGauche = t->filsGauche;
+            delete t;
+            // on replace le fils droit
+            placer(fd);
+        }
+
+    }
 }

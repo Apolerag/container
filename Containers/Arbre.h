@@ -18,6 +18,7 @@ private:
     void afficher(Noeud* racine);
     void libererMemoire(Noeud* n);
     Noeud* trouveValeur(const int v);
+    void placer(Noeud* n);
 public:
     Arbre();
     ~Arbre();

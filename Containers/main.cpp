@@ -15,7 +15,8 @@ int main()
     srand(time(NULL)); // initialisation de rand
     std::cout << "Hello World!\n";
     Arbre a;
-    for (int i = 0; i < 10.; i++)
+    int i;
+    for (i = 10; i >0; i--)
     {
         int n = RANDINT(MINVAL, MAXVAL);
         std::cout << "n " << n << std::endl;
@@ -24,6 +25,14 @@ int main()
 
     a.afficher();
     std::cout << std::endl << a.valeurDansArbre(3) << " " << a.valeurDansArbre(12) << " " << a.valeurDansArbre(5) << std::endl;
+
+    //i = 0;
+    //while (a.valeurDansArbre(i) == false)
+    //{
+    //    i++;
+    //}
+    a.supprimeValeur(5);
+    a.afficher();
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
