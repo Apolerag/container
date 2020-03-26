@@ -3,7 +3,8 @@
 
 #include "arbre.h"
 
-Noeud* Arbre::nouveauNoeud(const int v)
+template<class T>
+typename Arbre<T>::Noeud* Arbre<T>::nouveauNoeud(const T& v)
 {
     Noeud* n = new Noeud;
     n->valeur = v;
@@ -12,14 +13,16 @@ Noeud* Arbre::nouveauNoeud(const int v)
     return n;
 }
 
-void Arbre::afficher(Noeud* noeud)
+template<typename T>
+void Arbre<T>::afficher(Noeud* noeud)
 {
     if (noeud->filsGauche != NULL) afficher(noeud->filsGauche);
     std::cout << noeud->valeur << std::endl;
     if (noeud->filsDroit != NULL) afficher(noeud->filsDroit);
 }
 
-void Arbre::libererMemoire(Noeud* n)
+template<typename  T>
+void Arbre<T>::libererMemoire(Noeud* n)
 {
     if (n != NULL)
     {
@@ -30,7 +33,8 @@ void Arbre::libererMemoire(Noeud* n)
     }
 }
 
-Noeud* Arbre::trouveValeur(const int v)
+template<typename T>
+typename Arbre<T>::Noeud* Arbre<T>::trouveValeur(const T& v)
 {
     Noeud* n = racine;
     while (n != NULL)
@@ -45,7 +49,8 @@ Noeud* Arbre::trouveValeur(const int v)
     return n;
 }
 
-void Arbre::placer(Noeud* n)
+template<class T>
+void Arbre<T>::placer(Noeud* n)
 {
     Noeud* courant = racine;
     Noeud* precedent = NULL;
@@ -79,33 +84,39 @@ void Arbre::placer(Noeud* n)
     }
 }
 
-Arbre::Arbre() :racine(NULL)
+template<typename T>
+Arbre<T>::Arbre() :racine(NULL)
 {
 }
 
-Arbre::~Arbre()
+template<typename T>
+Arbre<T>::~Arbre()
 {
     libererMemoire(racine);
 }
 
-void Arbre::ajouterNoeud(const int v)
+template<class T>
+void Arbre<T>::ajouterNoeud(const T& v)
 {
     Noeud* nouveau = nouveauNoeud(v);
 
     placer(nouveau);
 }
 
-void Arbre::afficher()
+template<typename T>
+void Arbre<T>::afficher()
 {
     afficher(racine);
 }
 
-bool Arbre::valeurDansArbre(const int v)
+template<typename T>
+bool Arbre<T>::valeurDansArbre(const T& v)
 {
     return (trouveValeur(v) != NULL) ? true : false;
 }
 
-void Arbre::supprimeValeur(const int v)
+template<typename T>
+void Arbre<T>::supprimeValeur(const T& v)
 {
     Noeud* n = trouveValeur(v);
     Noeud* fg = NULL;

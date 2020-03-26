@@ -4,7 +4,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
-#include <Arbre.h>
+#include <Arbre.cpp>
 
 #define RANDINT(A,B)(rand ()%(B-A)+A)
 #define MINVAL 0
@@ -14,7 +14,7 @@ int main()
 {
     srand(time(NULL)); // initialisation de rand
     std::cout << "Hello World!\n";
-    Arbre a;
+    Arbre<int> a;
     int i;
     for (i = 10; i > 0; i--)
     {

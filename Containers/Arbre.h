@@ -1,31 +1,30 @@
 #pragma once
 
-typedef struct _Noeud
-{
-    int valeur;
-    //la valeur de filsGauche est inférieur à valeur
-    // la valeur de filsDroit est supérieur à valeur
-    _Noeud* filsGauche;
-    _Noeud* filsDroit;
-} Noeud;
-
+template <class T>
 class Arbre
 {
 private:
-    Noeud* racine;
+    struct Noeud
+    {
+        T valeur;
+        // la valeur de filsGauche est inférieur à valeur
+        // la valeur de filsDroit est supérieur à valeur
+        Noeud* filsGauche;
+        Noeud* filsDroit;
+    } * racine;
 
-    Noeud* nouveauNoeud(const int v);
-    void afficher(Noeud* racine);
+    Noeud* nouveauNoeud(const T& v);
+    void afficher(Noeud* noeud);
     void libererMemoire(Noeud* n);
-    Noeud* trouveValeur(const int v);
+    Noeud* trouveValeur(const T& v);
     void placer(Noeud* n);
 public:
     Arbre();
     ~Arbre();
 
-    void ajouterNoeud(const int v);
+    void ajouterNoeud(const T& v);
     void afficher();
-    bool valeurDansArbre(const int v);
-    void supprimeValeur(const int v);
+    bool valeurDansArbre(const T& v);
+    void supprimeValeur(const T& v);
 };
 
