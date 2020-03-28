@@ -6,19 +6,7 @@
 template<class T>
 typename Arbre<T>::Noeud* Arbre<T>::nouveauNoeud(const T& v)
 {
-    Noeud* n = new Noeud;
-    n->valeur = v;
-    n->filsDroit = NULL;
-    n->filsGauche = NULL;
-    return n;
-}
-
-template<typename T>
-void Arbre<T>::afficher(Noeud* noeud)
-{
-    if (noeud->filsGauche != NULL) afficher(noeud->filsGauche);
-    std::cout << noeud->valeur << std::endl;
-    if (noeud->filsDroit != NULL) afficher(noeud->filsDroit);
+    return new Noeud(v);
 }
 
 template<typename  T>
@@ -26,8 +14,8 @@ void Arbre<T>::libererMemoire(Noeud* n)
 {
     if (n != NULL)
     {
-        libererMemoire(n->filsGauche);
-        libererMemoire(n->filsDroit);
+        libererMemoire(n->getFilsGauche());
+        libererMemoire(n->getFilsDroit());
         delete n;
         n = NULL;
     }
@@ -39,11 +27,11 @@ typename Arbre<T>::Noeud* Arbre<T>::trouveValeur(const T& v)
     Noeud* n = racine;
     while (n != NULL)
     {
-        if (n->valeur == v)
+        if (n->getValeur() == v)
         {
             break;
         }
-        else n = (v > n->valeur) ? n->filsDroit : n->filsGauche;
+        else n = (v > n->getValeur()) ? n->getFilsDroit() : n->getFilsGauche();
     }
 
     return n;
@@ -63,23 +51,23 @@ void Arbre<T>::placer(Noeud* n)
         while (courant != NULL)
         {
             precedent = courant;
-            if (courant->valeur <= n->valeur)
+            if (courant->getValeur() <= n->getValeur())
             {
-                courant = courant->filsDroit;
+                courant = courant->getFilsDroit();
             }
             else
             {
-                courant = courant->filsGauche;
+                courant = courant->getFilsGauche();
             }
         }
 
-        if (precedent->valeur <= n->valeur)
+        if (precedent->getValeur() <= n->getValeur())
         {
-            precedent->filsDroit = n;
+            precedent->setFilsDroit(n);
         }
         else
         {
-            precedent->filsGauche = n;
+            precedent->setFilsGauche(n);
         }
     }
 }
@@ -104,12 +92,6 @@ void Arbre<T>::ajouterNoeud(const T& v)
 }
 
 template<typename T>
-void Arbre<T>::afficher()
-{
-    afficher(racine);
-}
-
-template<typename T>
 bool Arbre<T>::valeurDansArbre(const T& v)
 {
     return (trouveValeur(v) != NULL) ? true : false;
@@ -126,8 +108,8 @@ void Arbre<T>::supprimeValeur(const T& v)
     if (n != NULL)
     {
         // on recupere les fils
-        fg = n->filsGauche;
-        fd = n->filsDroit;
+        fg = n->getFilsGauche();
+        fd = n->getFilsDroit();
 
 
         if (fg == NULL && fd == NULL)
@@ -137,18 +119,14 @@ void Arbre<T>::supprimeValeur(const T& v)
         }
         else if (fg == NULL)
         {
-            t = n->filsDroit;
-            n->valeur = t->valeur;
-            n->filsDroit = t->filsDroit;
-            n->filsGauche = t->filsGauche;
+            t = n->getFilsDroit();
+            n = t;
             delete t;
         }
         else
         {
-            t = n->filsGauche;
-            n->valeur = t->valeur;
-            n->filsDroit = t->filsDroit;
-            n->filsGauche = t->filsGauche;
+            t = n->getFilsGauche();
+            n = t;
             delete t;
             // on replace le fils droit s'il existe
             if (fd != NULL)
@@ -158,4 +136,11 @@ void Arbre<T>::supprimeValeur(const T& v)
         }
 
     }
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& out, const Arbre<T>& arbre)
+{
+    //arbre.afficher(out);
+    return out;
 }

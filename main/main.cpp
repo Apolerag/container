@@ -23,7 +23,7 @@ int main()
         a.ajouterNoeud(n);
     }
 
-    a.afficher();
+    std::cout << a;
     std::cout << std::endl << a.valeurDansArbre(3) << " " << a.valeurDansArbre(12) << " " << a.valeurDansArbre(5) << std::endl;
 
     //i = 0;
@@ -32,7 +32,7 @@ int main()
     //    i++;
     //}
     a.supprimeValeur(5);
-    a.afficher();
+    std::cout << a;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
