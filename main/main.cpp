@@ -15,13 +15,13 @@ int main()
     srand(time(NULL)); // initialisation de rand
     std::cout << "Hello World!\n";
     Arbre<int> a;
-    int i;
-    for (i = 10; i > 0; i--)
-    {
-        int n = RANDINT(MINVAL, MAXVAL);
-        std::cout << "n " << n << std::endl;
-        a.ajouterNoeud(n);
-    }
+    //int i;
+    //for (i = 10; i > 0; i--)
+    //{
+    //    int n = RANDINT(MINVAL, MAXVAL);
+    //    std::cout << "n " << n << std::endl;
+    //    a.ajouterNoeud(n);
+    //}
 
     std::cout << a;
     std::cout << std::endl << a.valeurDansArbre(3) << " " << a.valeurDansArbre(12) << " " << a.valeurDansArbre(5) << std::endl;
@@ -31,8 +31,13 @@ int main()
     //{
     //    i++;
     //}
+    std::cout << a << std::endl;
+    a.ajouterNoeud(7);
+    a.ajouterNoeud(3);
+    a.ajouterNoeud(5);
+    std::cout << a << std::endl;
     a.supprimeValeur(5);
-    std::cout << a;
+    std::cout << a << std::endl;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage

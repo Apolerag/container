@@ -4,13 +4,13 @@
 #include "arbre.h"
 
 template<class T>
-typename Arbre<T>::Noeud* Arbre<T>::nouveauNoeud(const T& v)
+Noeud<T>* Arbre<T>::nouveauNoeud(const T& v)
 {
-    return new Noeud(v);
+    return new Noeud<T>(v);
 }
 
 template<typename  T>
-void Arbre<T>::libererMemoire(Noeud* n)
+void Arbre<T>::libererMemoire(Noeud<T>* n)
 {
     if (n != NULL)
     {
@@ -21,27 +21,30 @@ void Arbre<T>::libererMemoire(Noeud* n)
     }
 }
 
-template<typename T>
-typename Arbre<T>::Noeud* Arbre<T>::trouveValeur(const T& v)
+template<class T>
+typename Noeud<T>* Arbre<T>::trouveValeur(const T& v)
 {
-    Noeud* n = racine;
+    Noeud<T>* n = racine;
     while (n != NULL)
     {
         if (n->getValeur() == v)
         {
             break;
         }
-        else n = (v > n->getValeur()) ? n->getFilsDroit() : n->getFilsGauche();
+        else
+        {
+            n = (v > n->getValeur()) ? n->getFilsDroit() : n->getFilsGauche();
+        }
     }
 
     return n;
 }
 
 template<class T>
-void Arbre<T>::placer(Noeud* n)
+void Arbre<T>::placer(Noeud<T>* n)
 {
-    Noeud* courant = racine;
-    Noeud* precedent = NULL;
+    Noeud<T>* courant = racine;
+    Noeud<T>* precedent = NULL;
     if (racine == NULL)
     {
         racine = n;
@@ -72,6 +75,23 @@ void Arbre<T>::placer(Noeud* n)
     }
 }
 
+template<class T>
+void Arbre<T>::afficher(std::ostream& out, Noeud<T>* n) const
+{
+    if (n == NULL)
+        return;
+
+    if (n->getFilsGauche() != NULL)
+    {
+        afficher(out, n->getFilsGauche());
+    }
+    out << n->getValeur() << std::endl;
+    if (n->getFilsDroit() != NULL)
+    {
+        afficher(out, n->getFilsDroit());
+    }
+}
+
 template<typename T>
 Arbre<T>::Arbre() :racine(NULL)
 {
@@ -86,7 +106,7 @@ Arbre<T>::~Arbre()
 template<class T>
 void Arbre<T>::ajouterNoeud(const T& v)
 {
-    Noeud* nouveau = nouveauNoeud(v);
+    Noeud<T>* nouveau = nouveauNoeud(v);
 
     placer(nouveau);
 }
@@ -100,47 +120,61 @@ bool Arbre<T>::valeurDansArbre(const T& v)
 template<typename T>
 void Arbre<T>::supprimeValeur(const T& v)
 {
-    Noeud* n = trouveValeur(v);
-    Noeud* fg = NULL;
-    Noeud* fd = NULL;
-    Noeud* t = NULL;
+    Noeud<T>* n = trouveValeur(v);
+    Noeud<T>* gauche = NULL;
+    Noeud<T>* droit = NULL;
+    Noeud<T>* courant = racine;
 
-    if (n != NULL)
+    // si pas trouvé
+    if (n == NULL)
     {
-        // on recupere les fils
-        fg = n->getFilsGauche();
-        fd = n->getFilsDroit();
-
-
-        if (fg == NULL && fd == NULL)
-        {
-            delete n;
-            n = NULL;
-        }
-        else if (fg == NULL)
-        {
-            t = n->getFilsDroit();
-            n = t;
-            delete t;
-        }
-        else
-        {
-            t = n->getFilsGauche();
-            n = t;
-            delete t;
-            // on replace le fils droit s'il existe
-            if (fd != NULL)
-            {
-                placer(fd);
-            }
-        }
-
+        return;
     }
+    // on recupere les fils
+    gauche = n->getFilsGauche();
+    droit = n->getFilsDroit();
+
+    // on supprime la racine
+    if (n == racine)
+    {
+        delete racine;
+        racine = gauche;
+        if (droit != NULL)
+        {
+            placer(droit);
+        }
+        return;
+    }
+
+    while (courant) {
+        //Si une des branches de ce noeud est celle que l'on recherche, 
+        //on sort de la boucle while 
+        if (courant->getFilsDroit() == n || courant->getFilsGauche() == n) break;
+
+        //Sinon, on continue
+        if (n->getValeur() >= courant->getValeur())
+            courant = courant->getFilsDroit();
+        else
+            courant = courant->getFilsGauche();
+    }
+
+    if (courant->getFilsDroit() == n)
+        courant->setFilsDroit(droit);
+    else
+        courant->setFilsGauche(droit);
+    //end if
+
+    //Accrochage du fils du Noeud disparu 
+    if (gauche) placer(gauche);
+
+    //Enfin, on libère l'objet pNoeud de la mémoire
+    delete n;
+
 }
 
 template<typename T>
 std::ostream& operator<<(std::ostream& out, const Arbre<T>& arbre)
 {
-    //arbre.afficher(out);
+    arbre.afficher(out, arbre.racine);
     return out;
 }

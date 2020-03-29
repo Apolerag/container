@@ -39,3 +39,4 @@ Containers/x64/*
 *.tlog
 *.idb
 *.pdb
+*.enc
