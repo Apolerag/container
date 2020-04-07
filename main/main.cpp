@@ -1,43 +1,73 @@
 // ConsoleApplication2.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #include <iostream>
 #include <time.h>
-#include <stdlib.h>
 #include <Arbre.cpp>
 
 #define RANDINT(A,B)(rand ()%(B-A)+A)
 #define MINVAL 0
 #define MAXVAL 12
 
+template<typename T>
+std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
+{
+    for (int i = 0; i < v.size(); i++)
+    {
+        out << v[i] << " ";
+    }
+    out << std::endl;
+
+    return out;
+}
 int main()
 {
     srand(time(NULL)); // initialisation de rand
     std::cout << "Hello World!\n";
     Arbre<int> a;
-    //int i;
-    //for (i = 10; i > 0; i--)
-    //{
-    //    int n = RANDINT(MINVAL, MAXVAL);
-    //    std::cout << "n " << n << std::endl;
-    //    a.ajouterNoeud(n);
-    //}
+    Arbre<int> b;
 
-    std::cout << a;
-    std::cout << std::endl << a.valeurDansArbre(3) << " " << a.valeurDansArbre(12) << " " << a.valeurDansArbre(5) << std::endl;
-
-    //i = 0;
-    //while (a.valeurDansArbre(i) == false)
-    //{
-    //    i++;
-    //}
-    std::cout << a << std::endl;
+    a += 11;
+    a += 6;
     a.ajouterNoeud(7);
-    a.ajouterNoeud(3);
-    a.ajouterNoeud(5);
-    std::cout << a << std::endl;
-    a.supprimeValeur(5);
-    std::cout << a << std::endl;
+
+    b = a;
+    //b += 4;
+    //b += 8;
+    //a.ajouterNoeud(3);
+    //b.ajouterNoeud(1);
+    //b.ajouterNoeud(2);
+    //b.ajouterNoeud(13);
+    //a.ajouterNoeud(5);
+    //std::cout << "a " << a << std::endl;
+    //std::cout << "b " << b << std::endl;
+
+    //a += b;  //problème si activé et 
+   // std::cout << "a " << a << std::endl;
+    //a -= 7; // si activé
+
+    //std::cout << "a " << a << std::endl;
+  //  std::cout << "a " << a << std::endl;
+ //   std::cout << "b " << b << std::endl;
+  //  b = a;
+    std::cout << "a : " << a << std::endl;
+    std::cout << "b : " << b << std::endl;
+
+    Arbre<int> c(a + 100);
+    std::cout << "c : " << c << std::endl;
+    std::cout << "a + 100 : " << a + 100 << std::endl;
+    b = a + 1052;
+    std::cout << "b : " << b << std::endl;
+    c = b - 1052;
+    std::cout << "c : " << c << std::endl;
+    a.vider();
+    b.vider();
+    c.vider();
+    _CrtDumpMemoryLeaks();
+    return EXIT_SUCCESS;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage

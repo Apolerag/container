@@ -25,6 +25,13 @@ public:
     }
     Noeud(const T& v) :valeur(v), filsGauche(NULL), filsDroit(NULL)
     {}
+    ~Noeud()
+    {
+        delete filsGauche;
+        filsGauche = NULL;
+        delete filsDroit;
+        filsDroit = NULL;
+    }
     T& getValeur()
     {
         return valeur;
@@ -82,14 +89,17 @@ class Arbre
 private:
     Noeud<T> *racine;
 
+    //fonction interne
     Noeud<T>* nouveauNoeud(const T& v);
-    void libererMemoire(Noeud<T>* n);
     Noeud<T>* trouveValeur(const T& v);
     void placer(Noeud<T>* n);
     void afficher(std::ostream& out, Noeud<T>* n) const;
+    void copie(Arbre<T>& a, const Noeud<T>*n) const;
 public:
     Arbre();
+    Arbre(const Arbre<T> & a);
     ~Arbre();
+    void vider();
 
     Noeud<T>* getRacine()
     {
@@ -103,9 +113,21 @@ public:
     void ajouterNoeud(const T& v);
     bool valeurDansArbre(const T& v);
     void supprimeValeur(const T& v);
+    void arbreAVector(std::vector<T>& v) const ;
 
-    template<typename T>
+    Arbre<T>& operator=(const Arbre<T>& a);
+    Arbre<T>& operator+=(const T& t);
+    Arbre<T>& operator+=(const Arbre<T>& a);
+    Arbre<T>& operator-=(const T& t);
+
+    template<class T>
     friend std::ostream& operator<<(std::ostream& out, const Arbre<T>& arbre);
+    template<class T>
+    friend Arbre<T> operator+(const Arbre<T>& a, const Arbre<T>& b);
+    template<class T>
+    friend Arbre<T> operator+(const Arbre<T>& a, const T& t);
+    template<class T>
+    friend Arbre<T> operator-(const Arbre<T>& a, const T& t);
 };
 
 

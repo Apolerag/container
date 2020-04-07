@@ -40,3 +40,4 @@ Containers/x64/*
 *.idb
 *.pdb
 *.enc
+main/x64/Debug/*
