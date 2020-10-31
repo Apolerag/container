@@ -3,14 +3,18 @@
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
+#include <stack>
 
 #include <iostream>
 #include <time.h>
 #include <Arbre.cpp>
+#include <flask.h>
 
 #define RANDINT(A,B)(rand ()%(B-A)+A)
 #define MINVAL 0
 #define MAXVAL 12
+
+using namespace std;
 
 template<typename T>
 std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
@@ -26,7 +30,7 @@ std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
 int main()
 {
     srand(time(NULL)); // initialisation de rand
-    std::cout << "Hello World!\n";
+   /* std::cout << "Hello World!\n";
     Arbre<int> a;
     Arbre<int> b;
 
@@ -65,7 +69,38 @@ int main()
     std::cout << "c : " << c << std::endl;
     a.vider();
     b.vider();
-    c.vider();
+    c.vider();*/
+
+    /*
+    std::stack<int> s;
+    cout << s.empty() << endl;
+    s.push(50);
+    s.push(30);
+    s.push(20);
+    s.push(10);
+
+    cout << s.empty() << endl;
+    cout << s.size() << endl;
+    cout << s.top() << endl;
+    cout << s.size() << endl;
+    s.pop();
+    cout << s.size() << endl;*/
+
+
+    flask<int> f(4);
+    cout << "full " << f.full() << endl;
+    f.push(10);
+    f.push(20);
+    f.push(30);
+    f.push(40);
+    cout << "empty " << f.empty() << endl;
+    cout << "full " << f.full() << endl;
+    cout << "size " << f.size() << endl;
+    cout << "full " << f.top() << endl;
+    cout << "size " << f.size() << endl;
+    f.pop();
+    cout << "size " << f.size() << endl;
+
     _CrtDumpMemoryLeaks();
     return EXIT_SUCCESS;
 }

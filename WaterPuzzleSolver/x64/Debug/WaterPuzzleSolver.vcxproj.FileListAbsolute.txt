@@ -1,0 +1,2 @@
+C:\Users\le-ch\Source\Repos\Apolerag\container\Containers\x64\Debug\WaterPuzzleSolver.pdb
+C:\Users\le-ch\source\repos\Apolerag\container\WaterPuzzleSolver\x64\Debug\WaterPuzzleSolver.pdb
